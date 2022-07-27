@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/smartcontroller@3.2.5/dist/smartcontroller.min.js"></script>
+</head>
+<body>
+    <p id="z">Z axis</p>
+    <div id="x">X axis</div>
+    <div id="y">Y axis</div>
+<script>
+    var phone = new smartcontroller.SmartPhoneController();
+    window.addEventListener("deviceorientation", function(event) {
+        var message = {accelerometer:{"z":event.alpha, "x": event.beta, "y":event.gamma}};
+        document.getElementById("z").innerHTML = event.alpha;
+        document.getElementById("x").innerHTML = event.beta;   
+        document.getElementById("y").innerHTML = event.gamma;   
+        phone.sendMessage(message);
+    }, true);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <style>
+            .btn-group{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 270px;
+            }
+            .topcorner{
+                position:absolute;
+                top:0;
+                right:0;
+                }
+
+        </style>            
+    </head>
+    <body>     
+        <div class="btn-group">
+            <div id="qrcode"> <p> Scan the QR code to connect! </p></div>
+
+            <button id="up" class="button"><img src="images/up.png" width="80px" height= "80px" style="pointer-events: none"></button>
+            <button id="left" class="button"><img src="images/left.png" width="80px" height= "80px" style="pointer-events: none"></button>
+            
+            <button id="right" class="button"><img src="images/right.png" width="80px" height= "80px" style="pointer-events: none"></button>
+            <button id="down" class="button"><img src="images/down.png" width="80px" height= "80px" style= "pointer-events: none"></button>
+        </div>
+        
+        <script src="controller_receive.js"></script>
+
+
+        
+    </body>
+    </html>

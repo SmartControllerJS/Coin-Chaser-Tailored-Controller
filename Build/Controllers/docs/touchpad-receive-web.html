@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <style>
+            .topcorner{
+                position:absolute;
+                top:0;
+                right:0;
+                }
+            .canvas-group{
+                display: flex;
+                align-items: center;
+                justify-content: center; 
+            }
+        </style>
+    </head>
+
+    <body>
+        
+        <div class="canvas-group">
+            <div id="qrcode"> <p> Scan the QR code to connect! </p></div>
+            <canvas id="coordinateCanvas" width="500" height="470" style="border:1px solid #000000;"></canvas>
+        </div>
+        
+        <!-- Call the script --> 
+        <script src="touchpad_receive.js"></script>
+        
+
+    </body>
+    </html>

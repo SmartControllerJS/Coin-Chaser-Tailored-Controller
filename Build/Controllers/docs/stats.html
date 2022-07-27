@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/smartcontroller@3.2.5/dist/smartcontroller.min.js"></script>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        body {
+            margin: 0;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+    <p> Add URL to your controller: </p>
+    <input type="text" name="urltext" id="urltext"> 
+    <button id = 'generate'  onclick="select_controller(event)">Generate QR code</button>  <br>
+    <p> Or select one: </p>
+    <button id = 'joystick'  onclick="select_controller(event)">Joystick</button> 
+    <button id = 'nes' onclick="select_controller(event)">Nes Controller</button> 
+    <button id = 'touchpad' onclick="select_controller(event)">Touchpad</button> 
+    </div>
+
+    <p id="frames"> Number of frames: 0 </p>
+
+    <center>
+    <div >
+    <div id="qrcode" style = "display: inline-block; padding: 20px; background-color:rgb(245, 96, 96)">
+        <p> User 1 </p>
+        <p id="ping1"> Ping: 0ms </p>
+      </div>
+      <div id="qrcode1" style = "display: inline-block; padding:20px; background-color:rgb(96, 166, 245)">
+        <p> User 2 </p>
+        <p id="ping2"> Ping: 0ms </p>
+      </div>
+      <div id="qrcode2" style = "display: inline-block; padding:20px; background-color:rgb(245, 218, 96)">
+        <p> User 3 </p>
+        <p id="ping3"> Ping: 0ms </p>
+      </div>
+      <div id="qrcode3" style = "display: inline-block; padding:20px; background-color:rgb(163, 245, 96)">
+        <p> User 4 </p>
+        <p id="ping4"> Ping: 0ms </p>
+      </div>
+      </div>
+
+
+      <button onclick="update()">Start</button> 
+      <button onclick="stop()">Stop</button> 
+      <button onclick="export_csv()">Export csv</button> 
+
+     <div>
+        <div id='user_message' style = "display: inline-block; padding:20px;"></div>
+        <div id='stats_message' style = "display: inline-block; padding:20px;"></div>
+        <div id='ping' style = "display: inline-block; padding:20px;"></div>
+    </div>
+    </center>
+
+<script>  
+
+    urls = {joystick: "https://smartcontrollerjs.github.io/Controllers/joystick.html", nes:"https://smartcontrollerjs.github.io/Controllers/nesController.html", touchpad:"https://smartcontrollerjs.github.io/Controllers/touchpad.html" }
+    selected = false
+    picked_url = false
+    var simplePeer;
+
+    select_controller = (e) => {
+
+    if (selected == false){
+        if (e.target.id =='generate'){
+            if(document.getElementsByName('urltext')[0].value != ''){
+            picked_url = document.getElementsByName('urltext')[0].value
+            selected = true
+            }
+        }
+        else {
+            picked_url = urls[e.target.id]
+            selected = true
+        }
+
+        if (selected){
+            simplePeer = new smartcontroller.SmartController();
+            simplePeer.createQrCode(
+                picked_url,
+            "qrcode",
+            150,
+            150,
+            '1'
+            );
+
+            simplePeer.createQrCode(
+                picked_url,
+            "qrcode1",
+            150,
+            150,
+            '2'
+            );
+
+            simplePeer.createQrCode(
+                picked_url,
+            "qrcode2",
+            150,
+            150,
+            '3'
+            );
+
+            simplePeer.createQrCode(
+                picked_url,
+            "qrcode3",
+            150,
+            150,
+            '4'
+            );
+            }
+        }
+        };
+
+    
+
+    export_csv = () => {
+        rows = [[user_messages[0]], 
+                [user_messages[1]],
+                [user_messages[2]],
+                [user_messages[3]],
+                [stats_messages[0]],
+                [stats_messages[1]],
+                [stats_messages[2]],
+                [stats_messages[3]],
+                 [pings[0]],
+                 [pings[1]],
+                 [pings[2]],
+                 [pings[3]]]
+        let csvContent = "data:text/csv;charset=utf-8," 
+        + rows.map(e => e.join(",")).join("\n");
+ 
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "stats_data.csv");
+        document.body.appendChild(link); // Required for FF
+
+        link.click(); // This will download the data file named "my_data.csv".
+
+    }
+
+    var user_messages = [[0],[0],[0],[0]]
+    var stats_messages = [[0],[0],[0],[0]]
+    var pings = [[0],[0],[0],[0]]
+    var iter_count = []
+    var counter = 0
+    
+    drawGraph();
+    var flag = true
+    
+
+    var id;
+
+    function update(){
+        iter_count.push(counter);
+        counter = counter + 1;
+        user_no = Object.keys(simplePeer.controllerList).length
+        for (var i of Object.keys(simplePeer.controllerList)){
+            user_messages[i-1].push(simplePeer.controllerList[i].messagesPerSecond)
+            stats_messages[i-1].push(simplePeer.controllerList[i].messageTimesStats.length)
+            pings[i-1].push(simplePeer.controllerList[i].ping)
+            
+            //user_messages[i-1] =[simplePeer.controllerList[i].messagesPerSecond]
+            //stats_messages[i-1] = [simplePeer.controllerList[i].messageTimesStats.length]
+            //pings[i-1] = [simplePeer.controllerList[i].ping]
+        
+            //console.log(simplePeer.controllerList[i].messageTimesStats.length)
+            document.getElementById("ping" + (i).toString()).innerHTML = 'Ping: ' + simplePeer.controllerList[i].ping.toString() + " ms"
+        }
+        
+        //Plotly.extendTraces(user_message, {y: user_messages}, [0, 1, 2, 3])
+        //Plotly.extendTraces(stats_message, {y: stats_messages}, [0, 1, 2, 3])
+        //Plotly.extendTraces(ping, {y: pings}, [0, 1, 2, 3])
+        //console.log(stats_messages)
+        document.getElementById("frames").innerHTML = 'Number of frames: ' + counter.toString() 
+        id = requestAnimationFrame(update)
+    }
+
+    function stop(){
+        cancelAnimationFrame(id)
+        Plotly.extendTraces(stats_message, {y: stats_messages}, [0, 1, 2, 3])
+        Plotly.extendTraces(user_message, {y: user_messages}, [0, 1, 2, 3])
+        Plotly.extendTraces(ping, {y: pings}, [0, 1, 2, 3])
+    }
+
+    function drawGraph(x, y){
+            //user
+            var trace1 = {x: iter_count, y: [y], type: 'scatter', name: 'User 1', line: {color: 'red'}};
+            var trace2 = {x: iter_count, y: [y], type: 'scatter', name: 'User 2', line: { color: 'blue'}};
+            var trace3 = {x: iter_count, y: [y], type: 'scatter', name: 'User 3', line: { color: 'yellow'}};
+            var trace4 = {x: iter_count, y: [y], type: 'scatter', name: 'User 4', line: { color: 'green'}};
+
+            //stats
+            var trace1s = {x: iter_count, y: [y], type: 'scatter', name: 'User 1', line: { color: 'red'}};
+            var trace2s = {x: iter_count, y: [y], type: 'scatter', name: 'User 2', line: { color: 'blue'}};
+            var trace3s = {x: iter_count, y: [y], type: 'scatter', name: 'User 3', line: { color: 'yellow'}};
+            var trace4s = {x: iter_count, y: [y], type: 'scatter', name: 'User 4', line: { color: 'green'}};
+
+            //ping            
+            var trace1p = {x: iter_count, y: [y], type: 'scatter', name: 'User 1', line: { color: 'red'}};
+            var trace2p = {x: iter_count, y: [y], type: 'scatter', name: 'User 2', line: { color: 'blue'}};
+            var trace3p = {x: iter_count, y: [y], type: 'scatter', name: 'User 3', line: { color: 'yellow'}};
+            var trace4p = {x: iter_count, y: [y], type: 'scatter', name: 'User 4', line: { color: 'green'}};
+
+
+
+            var layout = {
+            height: 450,
+            width: 700,
+            title: 'User message rate',
+            xaxis: {
+             title: 'Number of frames',
+                 },
+            yaxis: {
+             title: 'Messages per second',
+                }
+                };
+
+            var layout2 = {
+            height: 450,
+            width: 700,
+            title: 'Statistics message rate',
+            xaxis: {
+             title: 'Number of frames',
+                 },
+            yaxis: {
+             title: 'Messages per second',
+                }
+                };
+
+            var layout3 = {
+            height: 450,
+            width: 700,
+            title: 'Ping',
+            xaxis: {
+             title: 'Number of frames',
+                 },
+            yaxis: {
+             title: 'Ping',
+                }
+                };
+
+              Plotly.newPlot('user_message', [trace1, trace2, trace3, trace4], layout);
+              Plotly.newPlot('stats_message',[trace1s, trace2s, trace3s, trace4s], layout2);
+              Plotly.newPlot('ping',[trace1p, trace2p, trace3p, trace4p], layout3);
+            };
+
+</script>
+</body>
+</html>
