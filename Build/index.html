@@ -71,9 +71,9 @@
       loadingBar.style.display = "block";
 
       // create QR code and connection
-      const simplePeer = new smartcontroller.NesSmartController();
+      const simplePeer = new smartcontroller.CoinChaserController();
       simplePeer.createQrCode(
-        "https://smartcontrollerjs.github.io/Controllers/nesController.html",
+        "/Build/Controller/CoinChaserController.html",
         "qrcode",
         150,
         150,
