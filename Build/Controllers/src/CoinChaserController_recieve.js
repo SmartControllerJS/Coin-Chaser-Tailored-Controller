@@ -11,12 +11,12 @@ var coordinates = {};
 var colours = ["red", "blue", "yellow", "green"];
 
 //create an instance of JoystickSmartController, optionally specify a peer ID for the PC browser peer
-const simplePeer = new smartcontroller.CoinChaserController("1234567");
+const simplePeer = new smartcontroller.SmartController();
 
 //create and display a QR code for the smartphones, specify url for the controller, div element for the code to be displayed, optionally size and a player ID
 //this url is an official Joystick compatible with the JoystickSmartController class
 simplePeer.createQrCode(
-  "https://smartcontrollerjs.github.io/Controllers/joystick.html",
+  "https://smartcontrollerjs.github.io/Coin-Chaser-Tailored-Controller/Build/Controllers/docs/CoinChaserController.html",
   "qrcode",
   150,
   150,
