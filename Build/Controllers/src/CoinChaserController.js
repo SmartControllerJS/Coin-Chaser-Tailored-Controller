@@ -1,41 +1,58 @@
+import nipplejs from "nipplejs";
 import "smartcontroller";
 
 var phone = new smartcontroller.SmartPhoneController();
+var time = Date.now();
+var manager = nipplejs.create({
+  zone: document.getElementById("zone_joystick"),
+  mode: "static",
+  position: { left: "25%", top: "50%" },
+  color: "red",
+});
 
-// touch input canvas varaibles
-var canvasElement = document.getElementsByClassName("input_canvas")[0];
-canvasElement.setAttribute("width", window.innerWidth / 2);
-canvasElement.setAttribute("height", window.innerHeight);
+var CoinChaserController = manager.get(manager.id);
 
-function start_handler(ev) {
-  ev.preventDefault();
-  passCoordinates("start", ev.targetTouches, phone);
-}
+CoinChaserController.on("start", function (evt, data) {
+  var message = {
+    state: "start",
+    CoinChaserController: {
+      position: data.position,
+      direction: data.direction,
+      angle: 0,
+      force: data.force,
+      distance: data.distance,
+    },
+  };
+  phone.sendMessage(message);
+});
 
-function move_handler(ev) {
-  ev.preventDefault();
-  passCoordinates("move", ev.targetTouches, phone);
-}
+CoinChaserController.on("move", function (evt, data) {
+  var message = {
+    state: "move",
+    CoinChaserController: {
+      position: data.position,
+      direction: data.direction,
+      angle: data.angle,
+      force: data.force,
+      distance: data.distance,
+    },
+  };
+  phone.sendMessage(message);
+});
 
-function end_handler(ev) {
-  ev.preventDefault();
-  if (ev.targetTouches.length == 0) {
-    // Restore background and outline to original values
-  }
-  passCoordinates("end", ev.targetTouches, phone);
-}
-
-function set_handlers(e) {
-  // Install event handlers for the given element
-  var el = canvasElement;
-  el.ontouchstart = start_handler;
-  el.ontouchmove = move_handler;
-  // Use same handler for touchcancel and touchend
-  el.ontouchcancel = end_handler;
-  el.ontouchend = end_handler;
-}
-
-document.addEventListener("DOMContentLoaded", set_handlers);
+CoinChaserController.on("end", function (evt, data) {
+  var message = {
+    state: "end",
+    CoinChaserController: {
+      position: data.position,
+      direction: data.direction,
+      angle: 0,
+      force: data.force,
+      distance: data.distance,
+    },
+  };
+  phone.sendMessage(message);
+});
 
 const wrapper = document.getElementById("buttons");
 
@@ -50,19 +67,3 @@ wrapper.addEventListener("click", (event) => {
   console.dir(event.target.id);
 });
 
-function passCoordinates(move_type, coords, phone) {
-  var coordinates = {};
-  for (var i = 0; i < coords.length; i++) {
-    coordinates[i] = [
-      coords[i].clientX / canvasElement.width,
-      coords[i].clientY / canvasElement.height,
-    ];
-  }
-  var message = {
-    type: "touchpad",
-    state: move_type,
-    fingers: coords.length,
-    coordinates: coordinates,
-  };
-  phone.sendMessage(message);
-}
