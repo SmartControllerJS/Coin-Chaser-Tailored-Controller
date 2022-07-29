@@ -41,9 +41,6 @@ const wrapper = document.getElementById("buttons");
 
 wrapper.addEventListener("click", (event) => {
   const isButton = event.target.nodeName === "BUTTON";
-  if (!isButton) {
-    return;
-  }
   var message = {
     type: "button",
     button_id: event.target.id,
