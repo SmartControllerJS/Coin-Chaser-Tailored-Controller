@@ -10,6 +10,25 @@ var manager = nipplejs.create({
   color: "red",
 });
 
+const wrapper = document.getElementById("buttons");
+
+wrapper.addEventListener("click", (event) => {
+  const isButton = event.target.nodeName === "BUTTON";
+  var message = {
+    type: "button",
+    button_id: event.target.id,
+  };
+
+  phone.sendMessage(message);
+  console.dir(event.target.id);
+});
+
+
+u.prepareEvent = function (evt) { 
+  if (evt.target.className == 'front' || evt.target.className == 'back') evt.preventDefault(); 
+  return evt.type.match(/^touch/) ? evt.changedTouches : evt; 
+};
+
 var CoinChaserController = manager.get(manager.id);
 
 CoinChaserController.on("start", function (evt, data) {
@@ -54,16 +73,5 @@ CoinChaserController.on("end", function (evt, data) {
   phone.sendMessage(message);
 });
 
-const wrapper = document.getElementById("buttons");
 
-wrapper.addEventListener("click", (event) => {
-  const isButton = event.target.nodeName === "BUTTON";
-  var message = {
-    type: "button",
-    button_id: event.target.id,
-  };
-
-  phone.sendMessage(message);
-  console.dir(event.target.id);
-});
 
