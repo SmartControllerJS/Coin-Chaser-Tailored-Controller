@@ -5,7 +5,8 @@ var phone = new smartcontroller.SmartPhoneController();
 var time = Date.now();
 var manager = nipplejs.create({
   zone: document.getElementById("zone_joystick"),
-  mode: "static",
+  mode: "dynamic",
+  multitouch: true,
   position: { left: "25%", top: "50%" },
   color: "red",
 });
