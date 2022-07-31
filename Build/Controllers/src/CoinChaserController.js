@@ -1,15 +1,13 @@
 import nipplejs from "nipplejs";
-import {onMount} from "svelte";
 import "smartcontroller";
 
 var phone = new smartcontroller.SmartPhoneController();
 var time = Date.now();
-// var manager = nipplejs.create({
-//   zone: "zone_joystick",
-//   mode: "dynamic",
-//   position: { left: "25%", top: "50%" },
-//   color: "red",
-// });
+var manager = nipplejs.create({
+  zone: "joystickDiv",
+  mode: "dynamic",
+  color: "red",
+});
 
 const wrapper = document.getElementById("buttons");
 
@@ -30,62 +28,45 @@ wrapper.addEventListener("touchstart", (event) => {
 //   return evt.type.match(/^touch/) ? evt.changedTouches : evt; 
 // };
 
-let joystickDiv;
-let joystickActive = false;
+var CoinChaserController = manager.get(manager.id);
 
-onMount(() => {
-  const options = {
-    zone: joystickDiv, // active zone
-    color: "red",
-    mode: "dynamic"
+CoinChaserController.on("start", function (evt, data) {
+  var message = {
+    state: "start",
+    CoinChaserController: {
+      position: data.position,
+      direction: data.direction,
+      angle: 0,
+      force: data.force,
+      distance: data.distance,
+    },
   };
-  let CoinChaserController = NippleJS.create(options);
-  CoinChaserController.on("start", function (evt, data) {
-    joystickActive = true;
-    var message = {
-      state: "start",
-      CoinChaserController: {
-        position: data.position,
-        direction: data.direction,
-        angle: 0,
-        force: data.force,
-        distance: data.distance,
-      },
-    };
-    phone.sendMessage(message);
-  }).on("move", function (evt, data) {
-    joystickActive = true;
-    var message = {
-      state: "move",
-      CoinChaserController: {
-        position: data.position,
-        direction: data.direction,
-        angle: data.angle,
-        force: data.force,
-        distance: data.distance,
-      },
-    };
-    phone.sendMessage(message);
-  }).on("end", function (evt, data) {
-    joystickActive = true;
-    var message = {
-      state: "end",
-      CoinChaserController: {
-        position: data.position,
-        direction: data.direction,
-        angle: 0,
-        force: data.force,
-        distance: data.distance,
-      },
-    };
-    phone.sendMessage(message);
-  });
+  phone.sendMessage(message);
+}).on("move", function (evt, data) {
+  var message = {
+    state: "move",
+    CoinChaserController: {
+      position: data.position,
+      direction: data.direction,
+      angle: data.angle,
+      force: data.force,
+      distance: data.distance,
+    },
+  };
+  phone.sendMessage(message);
+}).on("end", function (evt, data) {
+  var message = {
+    state: "end",
+    CoinChaserController: {
+      position: data.position,
+      direction: data.direction,
+      angle: 0,
+      force: data.force,
+      distance: data.distance,
+    },
+  };
+  phone.sendMessage(message);
 });
-
-
-//var CoinChaserController = manager.get(manager.id);
-
-
 
 
 
