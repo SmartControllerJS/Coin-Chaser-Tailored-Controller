@@ -49,7 +49,7 @@
 
             div.joystick {
                 height: 100vh;
-                background-color: lightblue;
+                background-color: rgb(230, 186, 173);
             }
 
             </style>
@@ -71,6 +71,10 @@
             <div class="column" id="buttons">
                 <button class="button" id="jump">JUMP</button> 
             </div>
+
+
+
+
 
             <script>
                 import nipplejs from "nipplejs";
@@ -109,52 +113,52 @@
                 let joystickActive = false;
 
                 onMount(() => {
-                const options = {
-                    zone: joystickDiv, // active zone
-                    color: "red",
-                    mode: "dynamic"
-                };
-                let CoinChaserController = NippleJS.create(options);
-                CoinChaserController.on("start", function (evt, data) {
-                    joystickActive = true;
-                    var message = {
-                    state: "start",
-                    CoinChaserController: {
-                        position: data.position,
-                        direction: data.direction,
-                        angle: 0,
-                        force: data.force,
-                        distance: data.distance,
-                    },
+                    const options = {
+                        zone: joystickDiv, // active zone
+                        color: "red",
+                        mode: "dynamic"
                     };
-                    phone.sendMessage(message);
-                }).on("move", function (evt, data) {
-                    joystickActive = true;
-                    var message = {
-                    state: "move",
-                    CoinChaserController: {
-                        position: data.position,
-                        direction: data.direction,
-                        angle: data.angle,
-                        force: data.force,
-                        distance: data.distance,
-                    },
-                    };
-                    phone.sendMessage(message);
-                }).on("end", function (evt, data) {
-                    joystickActive = true;
-                    var message = {
-                    state: "end",
-                    CoinChaserController: {
-                        position: data.position,
-                        direction: data.direction,
-                        angle: 0,
-                        force: data.force,
-                        distance: data.distance,
-                    },
-                    };
-                    phone.sendMessage(message);
-                });
+                    let CoinChaserController = NippleJS.create(options);
+                    CoinChaserController.on("start", function (evt, data) {
+                        joystickActive = true;
+                        var message = {
+                        state: "start",
+                        CoinChaserController: {
+                            position: data.position,
+                            direction: data.direction,
+                            angle: 0,
+                            force: data.force,
+                            distance: data.distance,
+                        },
+                        };
+                        phone.sendMessage(message);
+                    }).on("move", function (evt, data) {
+                        joystickActive = true;
+                        var message = {
+                        state: "move",
+                        CoinChaserController: {
+                            position: data.position,
+                            direction: data.direction,
+                            angle: data.angle,
+                            force: data.force,
+                            distance: data.distance,
+                        },
+                        };
+                        phone.sendMessage(message);
+                    }).on("end", function (evt, data) {
+                        joystickActive = true;
+                        var message = {
+                        state: "end",
+                        CoinChaserController: {
+                            position: data.position,
+                            direction: data.direction,
+                            angle: 0,
+                            force: data.force,
+                            distance: data.distance,
+                        },
+                        };
+                        phone.sendMessage(message);
+                    });
                 });
 
 
