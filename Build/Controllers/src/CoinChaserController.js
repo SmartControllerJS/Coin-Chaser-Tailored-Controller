@@ -12,7 +12,7 @@ var manager = nipplejs.create({
 
 const wrapper = document.getElementById("buttons");
 
-wrapper.addEventListener("click", (event) => {
+wrapper.addEventListener("mousedown", (event) => {
   const isButton = event.target.nodeName === "BUTTON";
   var message = {
     type: "button",
