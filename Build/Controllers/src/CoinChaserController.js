@@ -4,7 +4,7 @@ import "smartcontroller";
 var phone = new smartcontroller.SmartPhoneController();
 var time = Date.now();
 var manager = nipplejs.create({
-  zone: document.getElementById("column-right"),
+  zone: document.getElementById("zone_joystick"),
   mode: "dynamic",
   position: { left: "25%", top: "50%" },
   color: "red",
