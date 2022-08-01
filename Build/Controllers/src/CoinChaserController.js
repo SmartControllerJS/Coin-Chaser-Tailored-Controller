@@ -4,14 +4,15 @@ import "smartcontroller";
 var phone = new smartcontroller.SmartPhoneController();
 var time = Date.now();
 var manager = nipplejs.create({
-  zone: "joystickDiv",
+  zone: document.getElementById("zone_joystick"),
   mode: "dynamic",
+  position: { left: "25%", top: "50%" },
   color: "red",
 });
 
 const wrapper = document.getElementById("buttons");
 
-wrapper.addEventListener("touchstart", (event) => {
+wrapper.addEventListener("click", (event) => {
   const isButton = event.target.nodeName === "BUTTON";
   var message = {
     type: "button",
@@ -21,12 +22,6 @@ wrapper.addEventListener("touchstart", (event) => {
   phone.sendMessage(message);
   console.dir(event.target.id);
 });
-
-// // prevents zoom
-// u.prepareEvent = function (evt) { 
-//   if (evt.target.className == 'front' || evt.target.className == 'back') evt.preventDefault(); 
-//   return evt.type.match(/^touch/) ? evt.changedTouches : evt; 
-// };
 
 var CoinChaserController = manager.get(manager.id);
 
