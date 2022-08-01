@@ -12,7 +12,7 @@ var manager = nipplejs.create({
 
 const wrapper = document.getElementById("buttons");
 
-wrapper.addEventListener("click", (event) => {
+wrapper.addEventListener("mousedown", (event) => {
   const isButton = event.target.nodeName === "BUTTON";
   var message = {
     type: "button",
@@ -37,7 +37,9 @@ CoinChaserController.on("start", function (evt, data) {
     },
   };
   phone.sendMessage(message);
-}).on("move", function (evt, data) {
+});
+
+CoinChaserController.on("move", function (evt, data) {
   var message = {
     state: "move",
     CoinChaserController: {
@@ -49,7 +51,9 @@ CoinChaserController.on("start", function (evt, data) {
     },
   };
   phone.sendMessage(message);
-}).on("end", function (evt, data) {
+});
+
+CoinChaserController.on("end", function (evt, data) {
   var message = {
     state: "end",
     CoinChaserController: {
