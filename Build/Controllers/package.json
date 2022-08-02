@@ -17,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "http-server": "14.0.0",
-    "nipplejs": "0.9.0",
+    "nipplejs": "^0.9.1",
     "smartcontroller": "3.2.5",
     "svelte": "^3.49.0"
   },

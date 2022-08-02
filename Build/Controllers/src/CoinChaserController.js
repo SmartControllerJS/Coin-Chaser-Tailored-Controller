@@ -2,16 +2,8 @@ import nipplejs from "nipplejs";
 import "smartcontroller";
 
 var phone = new smartcontroller.SmartPhoneController();
-var time = Date.now();
-var manager = nipplejs.create({
-  zone: document.getElementById("zone_joystick"),
-  mode: "dynamic",
-  position: { left: "25%", top: "50%" },
-  color: "red",
-});
 
 const wrapper = document.getElementById("buttons");
-
 wrapper.addEventListener("mousedown", (event) => {
   const isButton = event.target.nodeName === "BUTTON";
   var message = {
@@ -21,6 +13,14 @@ wrapper.addEventListener("mousedown", (event) => {
 
   phone.sendMessage(message);
   console.dir(event.target.id);
+});
+
+
+var time = Date.now();
+var manager = nipplejs.create({
+  zone: document.getElementById("zone_joystick"),
+  mode: "dynamic",
+  color: "red",
 });
 
 var CoinChaserController = manager.get(manager.id);
