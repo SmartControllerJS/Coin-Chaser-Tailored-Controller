@@ -78,7 +78,6 @@
             var manager = nipplejs.create({
                 zone: document.getElementById("zone_joystick"),
                 mode: "dynamic",
-                position: { left: "25%", top: "50%" },
                 color: "red",
             });
 
@@ -86,48 +85,49 @@
 
             console.log("This is Joystick: ", manager);
 
-            joystick.on("start", function (evt, data) {
-                var message = {
-                    state: "start",
-                    CoinChaserController: {
-                        position: data.position,
-                        direction: data.direction,
-                        angle: 0,
-                        force: data.force,
-                        distance: data.distance,
-                    },
-                };
-                phone.sendMessage(message);
-            });
+            manager.on('added', function (evt, nipple) {
+                nipple.on("start", function (evt, data) {
+                    var message = {
+                        state: "start",
+                        CoinChaserController: {
+                            position: data.position,
+                            direction: data.direction,
+                            angle: 0,
+                            force: data.force,
+                            distance: data.distance,
+                        },
+                    };
+                    phone.sendMessage(message);
+                });
 
-            joystick.on("move", function (evt, data) {
-                var message = {
-                    state: "move",
-                    CoinChaserController: {
-                        position: data.position,
-                        direction: data.direction,
-                        angle: data.angle,
-                        force: data.force,
-                        distance: data.distance,
-                    },
-                };
-                phone.sendMessage(message);
-            });
+                nipple.on("move", function (evt, data) {
+                    var message = {
+                        state: "move",
+                        CoinChaserController: {
+                            position: data.position,
+                            direction: data.direction,
+                            angle: data.angle,
+                            force: data.force,
+                            distance: data.distance,
+                        },
+                    };
+                    phone.sendMessage(message);
+                });
 
-            joystick.on("end", function (evt, data) {
-                var message = {
-                    state: "end",
-                    CoinChaserController: {
-                        position: data.position,
-                        direction: data.direction,
-                        angle: 0,
-                        force: data.force,
-                        distance: data.distance,
-                    },
-                };
-                phone.sendMessage(message);
+                nipple.on("end", function (evt, data) {
+                    var message = {
+                        state: "end",
+                        CoinChaserController: {
+                            position: data.position,
+                            direction: data.direction,
+                            angle: 0,
+                            force: data.force,
+                            distance: data.distance,
+                        },
+                    };
+                    phone.sendMessage(message);
+                });
             });
-
 
             const wrapper = document.getElementById("buttons");
             wrapper.addEventListener("onPointerDown", (event) => {
