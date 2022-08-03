@@ -20,7 +20,8 @@
         body {
             margin: 0;
             height: 100%;
-            overflow: hidden
+            overflow: hidden;
+            user-select: none;
         }
 
         .header {
@@ -140,6 +141,8 @@
 
             manager.on('added', function (evt, nipple) {
                 nipple.on("start", function (evt, data) {
+                    document.getElementById("joystick_text").innerHTML = "";
+
                     var message = {
                         state: "start",
                         CoinChaserController: {
@@ -168,6 +171,8 @@
                 });
 
                 nipple.on("end", function (evt, data) {
+                    document.getElementById("joystick_text").innerHTML = "<p style='font-size: 1vh;''>Drag here to</p><p>MOVE!</p>";
+
                     var message = {
                         state: "end",
                         CoinChaserController: {
