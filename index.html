@@ -121,6 +121,8 @@
           // Get button pressed on smartcontroller and perform function with data received
           simplePeer.on("data", function (message) {
 
+            console.log(message);
+
             for ([player, playerid] of Object.entries(playerDict)) {
               if (playerid == message.id) {
                 inputState = message.data.data.state;
