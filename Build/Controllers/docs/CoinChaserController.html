@@ -77,7 +77,7 @@
             var time = Date.now();
             var manager = nipplejs.create({
                 zone: document.getElementById("zone_joystick"),
-                mode: "static",
+                mode: "dynamic",
                 position: { left: "25%", top: "50%" },
                 color: "red",
             });
@@ -130,7 +130,7 @@
 
 
             const wrapper = document.getElementById("buttons");
-            wrapper.addEventListener("click", (event) => {
+            wrapper.addEventListener("onPointerDown", (event) => {
                 const isButton = event.target.nodeName === "BUTTON";
                 var message = {
                     type: "button",
