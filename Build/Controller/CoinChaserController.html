@@ -83,6 +83,8 @@
 
             var joystick = manager.get(manager.id);
 
+            console.log("This is Joystick: ", manager);
+
             manager.on('added', function (evt, nipple) {
                 nipple.on("start", function (evt, data) {
                     var message = {
@@ -131,7 +133,7 @@
             wrapper.addEventListener("touchstart", (event) => {
                 const isButton = event.target.nodeName === "BUTTON";
                 var message = {
-                    state: "button",
+                    type: "button",
                     button_id: event.target.id,
                 };
 
