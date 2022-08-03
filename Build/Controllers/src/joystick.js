@@ -12,6 +12,9 @@ var manager = nipplejs.create({
 
 var joystick = manager.get(manager.id);
 
+console.log("Manager: ", manager);
+console.log("joystick: ", joystick);
+
 joystick.on("start", function (evt, data) {
   var message = {
     state: "start",

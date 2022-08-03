@@ -23,6 +23,8 @@ var manager = nipplejs.create({
   color: "red",
 });
 
+console.log("This: ", manager);
+
 var CoinChaserController = manager.get(manager.id);
 
 CoinChaserController.on("start", function (evt, data) {
