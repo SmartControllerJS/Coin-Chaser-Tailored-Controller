@@ -6,10 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src="https://unpkg.com/smartcontroller@3.2.5/dist/smartcontroller.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.9.1/nipplejs.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
-            background-color: hsl(10, 21%, 95%);
+            font-family: 'Press Start 2P', cursive;
+
+        }
+
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden
+        }
+
+        .header {
+            color: #f8d059;
+            background-color: #62f562;
+            text-align: center;
+            font-weight: 700;
+            text-shadow: 2px 2px #000000;
+        }
+
+        .header:after {
+            content: " ";
+            display: block;
+            position: relative;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 2vh;
+            background: linear-gradient(#41e041 0%, transparent 0%), linear-gradient(135deg, #a67c52 33.33%, transparent 33.33%) 0 0%, #a67c52 linear-gradient(45deg, #62f562 33.33%, #62f562 33.33%) 0 0%;
+            background: -webkit-linear-gradient(#41e041 0%, transparent 0%), -webkit-linear-gradient(135deg, #a67c52 33.33%, transparent 33.33%) 0 0%, #a67c52 -webkit-linear-gradient(45deg, #62f562 33.33%, #62f562 33.33%) 0 0%;
+            background: -o-linear-gradient(#41e041 0%, transparent 0%), -o-linear-gradient(135deg, #a67c52 33.33%, transparent 33.33%) 0 0%, #a67c52 -o-linear-gradient(45deg, #62f562 33.33%, #62f562 33.33%) 0 0%;
+            background: -moz-linear-gradient(#41e041 0%, transparent 0%), -moz-linear-gradient(135deg, #a67c52 33.33%, transparent 33.33%) 0 0%, #a67c52 -moz-linear-gradient(45deg, #62f562 33.33%, #62f562 33.33%) 0 0%;
+            background-repeat: repeat-x;
+            background-size: 0px 100%, 9px 27px, 9px 27px;
         }
 
         /* Create two equal columns that floats next to each other */
@@ -20,39 +55,45 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            background-color: #a67c52;
         }
 
         .column-right {
             float: left;
             width: 50%;
             height: 100vh;
+            background-color: #a67c52;
+            color: #f8d059;
+            text-shadow: 1px 1px #000000;
+            font-size: 2vh;
         }
 
         .button {
             display: block;
             align-content: center;
             position: relative;
-            font-size: 20px;
+            font-size: 2vh;
             top: 1%;
             left: 1%;
             width: 96%;
-            height: 80%;
+            height: 80vh;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
             outline: none;
-            color: rgb(0, 0, 0);
+            color: #f8d059;
             background-color: #00ff40;
             border: none;
             border-radius: 15px;
+            text-shadow: 1px 1px #000000;
         }
 
         .button:hover {
-            background-color: #02861f
+            background-color: #00ff40
         }
 
         .button:active {
-            background-color: #00ff40;
+            background-color: #02861f;
             transform: translateY(4px);
         }
     </style>
@@ -63,11 +104,23 @@
 
 <body>
 
+    <div class="header">
+        <h1>Coin Chaser!</h1>
+    </div>
+
     <div class="row">
-        <div class="column-right" id="zone_joystick"></div>
+        <div class="column-right" id="zone_joystick">
+            <div id="joystick_text" style="text-align: center; margin-top: 40vh">
+                <p style="font-size: 1vh;">Drag here to</p>
+                <p>MOVE!</p>
+            </div>
+        </div>
 
         <div class="column-left" id="buttons">
-            <button class="button" id="jump">JUMP</button>
+            <button class="button" id="jump">
+                <p style="font-size: 1vh;">Press here to</p>
+                <p>JUMP!</p>
+            </button>
         </div>
 
 
@@ -78,7 +131,7 @@
             var manager = nipplejs.create({
                 zone: document.getElementById("zone_joystick"),
                 mode: "dynamic",
-                color: "red",
+                color: "yellow",
             });
 
             var joystick = manager.get(manager.id);
