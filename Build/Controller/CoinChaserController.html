@@ -66,14 +66,14 @@
             background-color: #a67c52;
             color: #f8d059;
             text-shadow: 1px 1px #000000;
-            font-size: 2vh;
+            font-size: 2rem;
         }
 
         .button {
             display: block;
             align-content: center;
             position: relative;
-            font-size: 2vh;
+            font-size: 2rem;
             top: 1%;
             left: 1%;
             width: 96%;
@@ -112,14 +112,14 @@
     <div class="row">
         <div class="column-right" id="zone_joystick">
             <div id="joystick_text" style="text-align: center; margin-top: 40vh">
-                <p style="font-size: 1vh;">Drag here to</p>
+                <p style="font-size: 1.5rem;">Drag here to</p>
                 <p>MOVE!</p>
             </div>
         </div>
 
         <div class="column-left" id="buttons">
             <button class="button" id="jump">
-                <p style="font-size: 1vh;">Press here to</p>
+                <p style="font-size: 1.5rem;">Press here to</p>
                 <p>JUMP!</p>
             </button>
         </div>
@@ -171,7 +171,7 @@
                 });
 
                 nipple.on("end", function (evt, data) {
-                    document.getElementById("joystick_text").innerHTML = "<p style='font-size: 1vh;''>Drag here to</p><p>MOVE!</p>";
+                    document.getElementById("joystick_text").innerHTML = "<p style='font-size: 1.5rem;''>Drag here to</p><p>MOVE!</p>";
 
                     var message = {
                         state: "end",
