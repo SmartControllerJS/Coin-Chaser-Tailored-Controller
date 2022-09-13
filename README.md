@@ -14,7 +14,7 @@ This is a repository for my Level 4 university project. The goal of the project 
 
 
 ### Play Online
-To play the game online simply navigate to <a href=https://smartcontrollerjs.github.io/Coin-Chaser/>https://smartcontrollerjs.github.io/Coin-Chaser/</a> and scan the displayed QR code with your smartphone. This will send you to a controller interface as shown below, where you can start to control your character using the SmartController!
+To play the game online simply navigate to <a href=https://smartcontrollerjs.github.io/Coin-Chaser-Tailored-Controller/>https://smartcontrollerjs.github.io/Coin-Chaser-Tailored-Controller/</a> and scan the displayed QR code with your smartphone. This will send you to a controller interface as shown below, where you can start to control your character using the SmartController!
 
 ![Alt Text](https://imgur.com/GTqxssg.gif)
 ### Play Locally
